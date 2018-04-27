@@ -1,0 +1,6 @@
+ALTER DATABASE MyDb
+MODIFY FILE
+(
+    NAME=N'MyDataFile',
+    MAXSIZE=9000MB
+)

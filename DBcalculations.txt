@@ -1,0 +1,12 @@
+[1/29/2016 7:08 PM] Suchitra Shelke: 
+AggregateDBfree = (LONG)(DBmaxFree + lDBFileFreeSpace) = 101176 KB / 1024 = 98.8046875 MB
+
+DBmaxFree = drive size / maximum restricted size ( 100 ) = (db_maxsize - db_size) * 8.0 = 98304 KB
+
+lDBFileFreeSpace = (double)(dbSize - reservedSize) / pagesPermb = 2.8046875 * 1024 = 2872 KB
+
+dbSize = 512 = select data_space_id, SUM(CONVERT(dec(15),size)) from sys.database_files where (type = 0) Group by data_space_id
+reservedSize = 153 = select data_space_id, reservedpages = sum(a.total_pages) from sys.allocation_units a Group by data_space_id
+pagesPermb = 128
+[1/29/2016 7:09 PM] Suchitra Shelke: 
+bottom to top asa study kar

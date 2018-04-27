@@ -1,0 +1,32 @@
+
+
+-- Create N numbers of File groups
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+go
+
+Create PROCEDURE [dbo].[AddFgp]
+
+AS
+
+DECLARE @i AS NVARCHAR(MAX)
+
+DECLARE @SQLstmt AS NVARCHAR(MAX)
+Begin
+
+Set @i = 1
+
+-- Change the value 'n' with the desired number of filegroup
+
+While @i < 5000
+Begin 
+
+SET @SQLstmt ='ALTER DATABASE FGTest ADD FILEGROUP [test ' + @i + ']'
+
+EXEC(@SQLstmt)
+Set @i = @i + 1
+
+End
+End
+

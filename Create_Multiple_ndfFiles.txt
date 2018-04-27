@@ -1,0 +1,51 @@
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+go
+
+
+CREATE PROCEDURE [dbo].[AddData]
+
+AS
+
+DECLARE @i AS int
+DECLARE @temp AS Varchar(MAX)
+DECLARE @Name AS Varchar(MAX)
+DECLARE @SQLstmt AS NVARCHAR(MAX)
+
+Begin
+
+Set @i = 1
+
+-- Change the value 'n' as per your desired number of ndf files
+
+While @i < n
+
+Begin
+-- Set the path of the disk 
+SET @temp =  'f:\Test' + Cast(@i as nvarchar(5)) + '.ndf'
+
+
+SET @Name = 'Test'+ Cast(@i as nvarchar(5))
+
+SET @SQLstmt= 'ALTER DATABASE Test
+ADD FILE 
+(
+  NAME = ''' + @Name + ''',	  
+  	
+  FILENAME = ''' + @temp + ''' ,
+
+  SIZE = 5MB,
+
+  MAXSIZE = 100MB,
+
+  FILEGROWTH = 5MB
+)'
+EXEC(@SQLstmt)
+
+Set @i = @i + 1
+
+End
+End
+
+
+

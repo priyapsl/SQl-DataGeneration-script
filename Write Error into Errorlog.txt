@@ -1,0 +1,8 @@
+Write Errorlog File
+BEGIN TRY
+  -- Error here
+  SELECT 1/0
+END TRY
+BEGIN CATCH
+  RAISERROR('Ouch... divie by zero', 16,1) WITH LOG
+END CATCH

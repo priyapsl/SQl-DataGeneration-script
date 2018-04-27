@@ -1,0 +1,18 @@
+EXEC sp_configure filestream_access_level, 2 RECONFIGURE
+	 
+	CREATE DATABASE chilaka ON PRIMARY ( NAME = Arch1,FILENAME = 'c:\raghu\archdat1.mdf'), 
+	FILEGROUP FileStreamGroup1 CONTAINS FILESTREAM(NAME = Arch3, FILENAME = 'c:\raghu\filestream1') 
+	LOG ON ( NAME = Archlog1, FILENAME ='c:\raghu\archlog1.ldf')
+	
+	
+	ALTER DATABASE chilaka
+      SET FILESTREAM ( DIRECTORY_NAME = N'directory_name1')
+
+	 
+
+	  ALTER DATABASE chilaka SET FILESTREAM ( 
+  		NON_TRANSACTED_ACCESS = FULL)
+
+	   
+CREATE TABLE DocumentStore AS FileTable
+           WITH ( FileTable_Directory = ' aaaaa')

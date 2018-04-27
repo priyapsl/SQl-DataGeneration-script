@@ -1,0 +1,28 @@
+DECLARE @dbName VARCHAR(8000)
+DECLARE @dbNamechange VARCHAR(8000)
+DECLARE @dbCount INT
+DECLARE @i INT
+
+
+
+-- modify the @dbName at below also
+-- modify the @dbCount at below also
+SET @i = 0; 
+
+--Set the database name you want to keep 
+SET	@dbName = 'myDBNAME' 
+
+-- No of databases you want to create here Set change the vaue of n as per your need
+SET @dbCount = n
+
+
+-- Create the databases  
+WHILE @i < @dbCount
+	BEGIN 
+			
+		SET @dbNamechange ='CREATE DATABASE '+ @dbName + Cast(@i as nvarchar(5));
+		EXEC (@dbNamechange);
+		set @i = @i + 1;
+	end
+
+GO

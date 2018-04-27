@@ -1,0 +1,50 @@
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[AddLog1]
+
+AS
+
+DECLARE @i AS int
+DECLARE @temp AS Varchar(MAX)
+DECLARE @Name AS Varchar(MAX)
+DECLARE @SQLstmt AS NVARCHAR(MAX)
+
+Begin
+
+Set @i = 1
+
+-- Change the value 'n' as per your desired number of ndf files
+
+While @i < n 
+
+Begin
+
+SET @temp =  'f:\testlog' + Cast(@i as nvarchar(5)) + '.ldf'
+
+
+SET @Name = 'testlog2'+ Cast(@i as nvarchar(5))
+
+SET @SQLstmt= 'ALTER DATABASE Test
+ADD LOG FILE 
+(
+  NAME = ''' + @Name + ''',     
+      
+  FILENAME = ''' + @temp + ''' ,
+
+  SIZE = 5MB,
+
+  MAXSIZE = 100MB,
+
+  FILEGROWTH = 5MB
+)'
+EXEC(@SQLstmt)
+
+Set @i = @i + 1
+
+End
+End
+
+
+

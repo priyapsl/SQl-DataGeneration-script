@@ -1,0 +1,4 @@
+use master;
+select * from sys.database_files;
+use test
+select * from sys.database_files;

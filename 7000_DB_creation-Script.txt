@@ -1,0 +1,141 @@
+DECLARE @dbName VARCHAR(4000)
+DECLARE @dbNameChange VARCHAR(4000)
+DECLARE @dbCount bigINT
+DECLARE @i bigINT
+declare @path varchar(4000)
+declare @path1 varchar(4000)
+
+--Set the database name you want to keep 
+SET         @dbName = 'PSL_TEST' ;
+
+
+-- modify the @dbName at below also
+-- modify the @dbCount at below also
+SET @i = 0; 
+
+
+-- No of databases you want to create, here Set 1 DB's
+SET @dbCount = 1 ;
+
+--WHILE @i < @dbCount
+--             BEGIN 
+                                                
+--                             SET @dbNameChange ='DROP DATABASE '+ @dbName + Cast(@i as nvarchar(5));
+--                             EXEC (@dbNamechange);
+--                             set @i = @i + 1;
+--             end
+
+
+-- Create the databases  
+
+WHILE @i < @dbCount
+                BEGIN 
+                                                set @path = 'C:\PSL_TEST_DB\';
+                                                set @path1 = @path + @dbName + cast(@i as nvarchar(5)) + '.mdf';
+
+                                                SET @dbNameChange ='CREATE DATABASE '+ @dbName + Cast(@i as nvarchar(5)) + ' on primary ( name = '+ @dbName + cast(@i as nvarchar(5)) + ', filename = '''+@path1+''')';
+                                                EXEC (@dbNamechange);
+                                                set @i = @i + 1;
+                end
+
+GO
+
+
+-- Create Tables under created databases
+
+DECLARE @dbName VARCHAR(4000)
+DECLARE @dbNameChange VARCHAR(4000)
+DECLARE @dbCount bigINT
+DECLARE @tableName VARCHAR(4000)
+DECLARE @tableNameChange VARCHAR(4000)
+DECLARE @tableCount bigINT
+DECLARE @rowCount bigINT
+DECLARE @i bigINT
+DECLARE @j bigINT
+DECLARE @k bigint
+DECLARE @insertRow VARCHAR(4000)
+DECLARE @nm1 VARCHAR(4000) 
+DECLARE @nm2 VARCHAR(4000) 
+DECLARE @nm3 VARCHAR(4000) 
+DECLARE @nm4 VARCHAR(4000) 
+DECLARE @indexName VARCHAR(4000) 
+DECLARE @nm5 VARCHAR(4000) 
+DECLARE @cmd VARCHAR(4000) 
+DECLARE @tt VARCHAR(4000) 
+DECLARE @nm6 VARCHAR(4000) 
+
+SET @i = 0;
+SET @j = 0;
+set @k = 0;
+
+--Set the database name under which tables will be created
+SET         @dbName = 'PSL_TEST' ;
+
+-- no. of databases under which tables will be created
+SET @dbCount = 1;  
+
+-- Give the tablename you want to create
+SET @tableName = 'single_table'  ;
+
+--total no of tables in each database
+SET @tableCount = 10000 ;
+
+-- total no of rows in each table 
+SET @rowCount = 5 ;
+
+set @nm1 = replicate('PSL',10);
+set @nm2 = replicate('PSPL',10);
+set @nm3 = replicate('TEST',10);
+set @nm4 = replicate('PSLTEST',10);
+set @nm5 = replicate('PSPLTEST',10);
+set @nm6 = replicate('TESTTAB',10);
+
+
+
+
+WHILE @i < @dbCount
+                BEGIN 
+                                                
+
+                                WHILE (@j < @tableCount)
+                                                BEGIN
+                                                                                                                                
+                                                 SET  @tableNameChange = 'USE '+@dbName+ CAST (@i as nvarchar(5))+ ';' 
+                                                                +'CREATE TABLE ' + @tableName + CAST (@j as nvarchar(5)) + ' (name15 varchar(4000),name14 varchar(4000),name13 varchar(4000),name12 varchar(4000),name11 varchar(4000),name10 varchar(4000),name9 varchar(4000),name8 varchar(4000),name7 varchar(7000),name6 varchar(4000),name5 varchar(4000),id bigint,name1 varchar(4000),name2 varchar(4000),name3 varchar(4000),name4 varchar(4000) )';
+                                                                EXEC (@tableNameChange);
+                                                                
+                                                -- Creating Index on evry Table
+                                                                set @tt = @tableName + CAST (@j as nvarchar(5));
+                                                                
+                                                                set @indexName = 'id_ndx' + CAST (@j as nvarchar(5));
+                                                                
+                                                                set @cmd = 'USE '+@dbName + CAST (@i as nvarchar(5))+';'
+                                                                                                                +'CREATE INDEX ' + @indexName + ' ON ' + @tt + '(id);';
+                                                                
+                                                                exec(@cmd);
+                                                                
+
+                                                -- Index Created
+                                                                WHILE (@k < @rowCount)
+                                                                                BEGIN
+                                                                                set @insertRow = 'USE '+@dbName + CAST (@i as nvarchar(5))+';'
+                                                                                + 'INSERT INTO '+ @tableName +  CAST (@j as nvarchar(5)) + ' (name15,name14,name13,name12,name11,name10,name9,name8,name7,name6,name5,name3,name4,name1,name2,id)' +  ' values('''+@nm6+''','''+@nm6+''','''+@nm6+''','''+@nm6+''','''+@nm6+''','''+@nm6+''','''+@nm6+''','''+@nm6+''','''+@nm6+''','''+@nm6+''','''+@nm5+''','''+@nm3+''','''+@nm4+''','''+@nm1+''','''+@nm2+''',' + cast(@k as nvarchar(20))+ ' ) ;';
+                                                                                EXEC (@insertRow);
+
+                                                                                                                                                                
+                                                                                SET @k = @k + 1;
+                                                                                END
+                                                                                
+                                                                                set @k = 0;
+
+                                                                
+                                                                SET @j =@j + 1;
+                                                
+                                                
+                                                END
+                                                
+                                                set @j = 0;
+                                
+                
+                                SET @i = @i + 1
+                END

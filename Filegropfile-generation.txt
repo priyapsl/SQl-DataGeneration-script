@@ -1,0 +1,53 @@
+
+-- Adding files to each file group which is created by the other script
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+go
+
+create PROCEDURE [dbo].[AddData]
+
+AS
+
+DECLARE @i AS Varchar(MAX)
+DECLARE @temp AS Varchar(MAX)
+DECLARE @Name AS Varchar(MAX)
+DECLARE @SQLstmt AS NVARCHAR(MAX)
+
+Begin
+
+Set @i = 1
+
+While @i < 3 
+
+Begin
+-- Set the path of the disk 
+SET @temp =  'c:\Test' + Cast(@i as nvarchar(5)) + '.ndf'
+
+--Set @temp = 'c:\mssql7\data\test2log' + i +  '.ldf'
+-- Set the logical name of file
+SET @Name = 'Test'+ Cast(@i as nvarchar(5))
+
+SET @SQLstmt= 'ALTER DATABASE Test
+ADD FILE 
+(
+  NAME = ''' + @Name + ''',	  
+  	
+  FILENAME = ''' + @temp + ''' ,
+
+  SIZE = 5MB,
+
+  MAXSIZE = 100MB,
+
+  FILEGROWTH = 5MB
+)
+TO FILEGROUP [' + @i + ']'
+EXEC(@SQLstmt)
+
+Set @i = @i + 1
+
+End
+End
+
+
+

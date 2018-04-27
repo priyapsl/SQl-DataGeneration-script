@@ -1,0 +1,15 @@
+begin TRANSACTION Mytest 
+SET TRANSACTION ISOLATION LEVEL read committed 
+DECLARE @intFlag INT 
+SET @intFlag = 1 
+WHILE (@intFlag =1)
+BEGIN
+insert into harshad values('ganesh');
+
+END
+
+
+COMMIT TRANSACTION Mytest
+
+select * from harshad with(UPDLOCK)
+
